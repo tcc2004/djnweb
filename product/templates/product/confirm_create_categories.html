@@ -1,0 +1,16 @@
+<h1>Xác nhận tạo danh mục</h1>
+
+<p>Các danh mục sau chưa tồn tại trong hệ thống:</p>
+<ul>
+    {% for category in missing_categories %}
+    <li>{{ category }}</li>
+    {% endfor %}
+</ul>
+
+<p>Bạn có muốn tạo các danh mục này không?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Tạo danh mục mới</button>
+    <a href="{% url 'import-products-excel' %}">Hủy</a>
+</form>

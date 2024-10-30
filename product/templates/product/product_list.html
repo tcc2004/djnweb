@@ -1,0 +1,134 @@
+{% extends "layout/base.html" %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'product/css/product.css' %}">
+ {% block headercontent %}
+<link rel="stylesheet" href="{% static 'product/css/product.css' %}">
+<h1>Danh sách sản phẩm</h1>
+<div class="content-actions">
+    <a href="{% url 'export-products-excel' %}" class="export-btn">
+        <button><i class="fas fa-upload"></i> Xuất file</button>
+    </a>
+    <a href="{% url 'import-products-excel' %}" class="import-btn">
+        <button><i class="fas fa-download"></i> Nhập file</button>
+    </a>
+    <a href="{% static 'files/product_template.xlsx' %}" class="download-btn">
+        <button><i class="fas fa-download"></i> Tải file mẫu Excel</button>
+    </a>
+    <a href="{% url 'product-create' %}" class="add-product-btn">
+        <button><i class="fas fa-plus"></i> Thêm sản phẩm</button>
+    </a> 
+</div>
+{% endblock headercontent %}
+
+{% block main_content %}
+<div class="product-container">
+
+    <!-- Form tìm kiếm sản phẩm -->
+    <form method="GET" action="{% url 'product-list' %}" class="search-form">
+        <input type="text" class="search-input" name="q" placeholder="Tìm kiếm sản phẩm..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <a href="{% url 'product-list' %}" class="btn-cancel">Hủy</a>
+    </form>
+    <button id="toggle-filter" class="btn btn-secondary">Bộ Lọc</button>
+    <div id="filter-form" >
+        <!-- Đặt form lọc ở đây -->
+        <form method="GET" action="{% url 'product-list' %}" class="form-inline mb-4">
+            {{ filter_form.as_p }}
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </form>
+    </div>
+    
+    
+    <!-- Nếu không có sản phẩm và có từ khóa tìm kiếm, đề xuất tạo mới -->
+    {% comment %} {% if request.GET.q and not products %}
+        <form method="POST" action="{% url 'product-list' %}" class="create-form">
+            {% csrf_token %}
+            <input type="hidden" name="new_product_name" value="{{ request.GET.q }}">
+            <p>Không tìm thấy sản phẩm với từ khóa "{{ request.GET.q }}". Bạn có muốn tạo sản phẩm này không?</p>
+            <button type="submit" class="btn btn-success">Tạo sản phẩm mới</button>
+        </form>
+    {% endif %} {% endcomment %}
+
+    <!-- Form chọn nhiều sản phẩm để xóa -->
+    {% if products %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="POST" action="{% url 'delete-multiple-products' %}">
+        {% csrf_token %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <!-- Checkbox chọn tất cả -->
+                    <th scope="col">
+                        <input type="checkbox" id="select-all" class="product-checkbox">
+                    </th>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Sku</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">ngay het han</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <!-- Checkbox chọn từng sản phẩm -->
+                    <td>
+                        <input type="checkbox" name="product_ids" value="{{ product.id }}" class="product-checkbox">
+                    </td>
+                    
+                    <td>
+                        <a href="{% url 'product-update' product.pk %}" class="product-link">{{ product.ten }}</a>
+                    </td>
+
+                    <td>
+                        {{ product.sku }}
+                    </td>
+
+                    <td>
+                        {{ product.gia }}
+                    </td>
+                    <td>
+                        {{ product.so_luong_ton_kho }}
+                    </td>
+                    <td>
+                        {% for category in product.danh_muc.all %}
+                            {{ category.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ product.ngay_het_han }}
+                        <p id="countdown-{{ product.id }}"></p> <!-- Phần tử để hiển thị đếm ngược -->
+                    </td>
+                    <td>
+                        {{ product.ngay_het_han }}
+                        <p id="countdown-{{ product.id }}"></p> <!-- Phần tử để hiển thị đếm ngược -->
+                        <button id="delete-btn-{{ product.id }}" class="btn-delete-expired" style="display: none;" onclick="deleteProduct({{ product.id }})">
+                            Xóa ngay
+                        </button>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn-delete" onclick="return confirmDelete();">Xóa sản phẩm đã chọn</button>
+    </form>
+
+    {% endif %}
+    
+    
+    
+    
+    
+    <script type="text/javascript" src="{% static 'product/js/product.js' %}"></script>
+        
+</div>
+{% endblock main_content %}

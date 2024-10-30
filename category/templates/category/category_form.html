@@ -1,0 +1,55 @@
+{% block main_content %}
+<h1>{% if object %}Cập nhật danh mục{% else %}Thêm danh mục{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Lưu</button>
+    <a href="{% url 'category-list' %}">Hủy</a>
+</form>
+
+<!-- Danh sách sản phẩm liên kết với danh mục -->
+{% comment %} {% if object and object.products.exists %}
+    <h2>Danh sách sản phẩm</h2>
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in object.products.all %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <a href="{% url 'product-update' product.pk %}">Chỉnh sửa</a> |
+                    <a href="{% url 'product-delete' product.pk %}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Không có sản phẩm nào liên kết với danh mục này.</p>
+{% endif %}
+
+<!-- Nút thêm sản phẩm -->
+<a href="{% url 'product-create' %}?category={{ object.pk }}" class="btn-add-product">Thêm sản phẩm</a> {% endcomment %}
+
+<script>
+// Xác nhận nếu người dùng rời khỏi trang khi chưa lưu form
+window.onbeforeunload = function(e) {
+    const form = document.querySelector('form');
+    const isFormDirty = [...form.elements].some(input => input.value !== input.defaultValue);
+    if (isFormDirty) {
+        return 'Bạn có chắc chắn muốn thoát mà không lưu thay đổi?';
+    }
+};
+</script>
+
+{% endblock main_content %}

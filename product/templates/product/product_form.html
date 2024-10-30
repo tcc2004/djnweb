@@ -1,0 +1,72 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+
+{% block main_content %}
+<link rel="stylesheet" href="{% static 'product/css/product.css' %}">
+<h1>{% if object %}Cập nhật sản phẩm{% else %}Thêm sản phẩm{% endif %}</h1>
+
+<form method="post" enctype="multipart/form-data" class="product-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="id_ten">Tên sản phẩm:</label>
+        {{ form.ten }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_sku">SKU:</label>
+        {{ form.sku }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_mo_ta">Mô tả:</label>
+        {{ form.mo_ta }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_gia">Giá:</label>
+        {{ form.gia }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_so_luong_ton_kho">Số lượng tồn kho:</label>
+        {{ form.so_luong_ton_kho }}
+    </div>
+
+    <div class="form-group form-inline">
+        <div class="form-inline-field">
+            <label for="id_ngay_san_xuat">Ngày sản xuất:</label>
+            {{ form.ngay_san_xuat }}
+        </div>
+        <div class="form-inline-field">
+            <label for="id_ngay_het_han">Ngày hết hạn:</label>
+            {{ form.ngay_het_han }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id_hinh_anh">Hình ảnh:</label>
+        {{ form.hinh_anh }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_danh_muc">Danh mục:</label>
+        {{ form.danh_muc }}
+    </div>
+
+    <button type="submit" class="btn-save">Lưu</button>
+    <a href="{% url 'product-list' %}" class="btn-cancel">Hủy</a>
+</form>
+
+<!-- Xác nhận nếu người dùng rời khỏi trang mà chưa lưu form -->
+<script>
+window.onbeforeunload = function(e) {
+    const form = document.querySelector('form');
+    const isFormDirty = [...form.elements].some(input => input.value !== input.defaultValue);
+    if (isFormDirty) {
+        return 'Bạn có chắc chắn muốn thoát mà không lưu thay đổi?';
+    }
+};
+</script>
+{% endblock main_content %}

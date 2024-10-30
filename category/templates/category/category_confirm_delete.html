@@ -1,0 +1,10 @@
+{% extends 'layout/base.html' %}
+{% block main_content %}
+<h1>Xác nhận xóa danh mục</h1>
+<p>Bạn có chắc chắn muốn xóa danh mục "{{ object.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Xóa</button>
+    <a href="{% url 'category-list' %}">Hủy</a>
+</form>
+{% endblock main_content %}

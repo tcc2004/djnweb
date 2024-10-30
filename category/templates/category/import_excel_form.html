@@ -1,0 +1,22 @@
+{% load static %}
+<h1>Nhập danh mục từ Excel</h1>
+
+<!-- Hiển thị thông báo nếu có -->
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<!-- Form để tải lên file Excel -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Nhập dữ liệu</button>
+</form>
+<a href="{% static 'files/category_template.xlsx' %}" class="download-btn">
+    <button><i class="fas fa-download"></i> Tải file mẫu Excel</button>
+</a>
+<a href="{% url 'category-list' %}">Quay lại danh sách</a>

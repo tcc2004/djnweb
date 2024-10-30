@@ -1,0 +1,150 @@
+{% extends "layout/base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'category/css/category.css' %}">
+{% block headercontent %}
+<link rel="stylesheet" href="{% static 'category/css/category.css' %}">
+<h1>Danh sách sản phẩm</h1>
+<div class="content-actions">
+    <a href="{% url 'export-categories-excel' %}" class="export-btn">
+        <button><i class="fas fa-upload"></i> Xuất file</button>
+    </a>
+    <a href="{% url 'import-categories-excel' %}" class="import-btn">
+        <button><i class="fas fa-download"></i> Nhập file</button>
+    </a>
+    <a href="{% url 'categoryy-create' %}" class="add-product-btn">
+        <button><i class="fas fa-plus"></i> Thêm sản phẩm</button>
+    </a> 
+</div>
+
+{% endblock headercontent %}
+{% block main_content %}
+<div class="category-container">
+
+    <!-- Form tìm kiếm danh mục -->
+    <form method="GET" action="{% url 'category-list' %}" class="search-form">
+        <input type="text" class="search-input" name="q" placeholder="Tìm kiếm danh mục..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+
+    <!-- Nếu không có danh mục và có từ khóa tìm kiếm, đề xuất tạo mới -->
+    {% if request.GET.q and not categories %}
+        <form method="POST" action="{% url 'category-list' %}" class="create-form">
+            {% csrf_token %}
+            <input type="hidden" name="new_category_name" value="{{ request.GET.q }}">
+            <p>Không tìm thấy danh mục với từ khóa "{{ request.GET.q }}". Bạn có muốn tạo danh mục này không?</p>
+            <button type="submit" class="btn btn-success">Tạo danh mục mới</button>
+        </form>
+    {% endif %}
+
+    <!-- Form chọn nhiều danh mục để xóa -->
+    {% if categories %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="POST" action="{% url 'delete-multiple-categories' %}">
+        {% csrf_token %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <!-- Checkbox chọn tất cả -->
+                    <th scope="col">
+                        <input type="checkbox" id="select-all" class="category-checkbox">
+                    </th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Điều kiện áp dụng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <!-- Checkbox chọn từng danh mục -->
+                    <td>
+                        <input type="checkbox" name="category_ids" value="{{ category.id }}" class="category-checkbox">
+                    </td>
+                    
+                    <td>
+                        <a href="{% url 'category-update' category.pk %}" class="category-link">{{ category.name }}</a>
+                    </td>
+                    <!-- Số lượng sản phẩm -->
+                    {% comment %} <td>
+                        {{ category.products.count }}
+                    </td> {% endcomment %}
+                    <!-- Điều kiện áp dụng -->
+                    <td>
+                        {% if category.condition %}
+                            {{ category.condition }}
+                        {% else %}
+                            &mdash; <!-- Hiển thị dấu gạch ngang nếu không có điều kiện áp dụng -->
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn-delete" onclick="return confirmDelete();">Xóa danh mục đã chọn</button>
+        
+    </form>
+
+    
+    {% endif %}
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm("Bạn có chắc chắn muốn xóa danh mục này không?");
+        }
+    </script>
+    <script type="text/javascript">
+        // Tự động ẩn thông báo sau 5 giây
+        setTimeout(function() {
+            let messages = document.querySelector('.messages');
+            if (messages) {
+                messages.style.display = 'none';
+            }
+        }, 5000); // 5000ms = 5 giây
+    </script>
+    <script type="text/javascript">
+        // Xử lý checkbox "Chọn tất cả"
+        document.getElementById('select-all').addEventListener('click', function(event) {
+            let checkboxes = document.querySelectorAll('.category-checkbox');
+            for (let checkbox of checkboxes) {
+                checkbox.checked = event.target.checked;
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        // Lấy tất cả các checkbox và nút xóa
+        const checkboxes = document.querySelectorAll('.category-checkbox');
+        const deleteButton = document.querySelector('.btn-delete');
+    
+        // Hàm kiểm tra nếu có checkbox nào được chọn
+        function toggleDeleteButton() {
+            let isChecked = false;
+    
+            // Kiểm tra nếu có ít nhất một checkbox được chọn
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    isChecked = true;
+                }
+            });
+    
+            // Hiển thị nút xóa nếu có checkbox nào được chọn
+            if (isChecked) {
+                deleteButton.style.display = 'block';  // Hiển thị nút xóa
+            } else {
+                deleteButton.style.display = 'none';  // Ẩn nút xóa nếu không checkbox nào được chọn
+            }
+        }
+    
+        // Thêm sự kiện "change" để kiểm tra mỗi lần có sự thay đổi ở checkbox
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', toggleDeleteButton);
+        });
+    </script>
+    
+    
+</div>
+{% endblock main_content %}

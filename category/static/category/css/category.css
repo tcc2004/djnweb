@@ -1,0 +1,215 @@
+/* Định dạng chung */
+.category-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Form tìm kiếm, tạo mới, xóa */
+.search-form, .create-form, .delete-form {
+    margin-bottom: 20px;
+}
+
+/* Input tìm kiếm */
+.search-input {
+    padding: 8px 12px;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Nút chung */
+.btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Các loại nút */
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Danh sách danh mục */
+ul.category-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #f1f1f1;
+}
+
+/* Căn chỉnh checkbox và tên danh mục */
+.category-info {
+    display: flex;
+    align-items: center;
+}
+
+.category-checkbox {
+    margin-right: 10px;
+}
+
+/* Link danh mục */
+.category-link {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.category-link:hover {
+    text-decoration: underline;
+}
+
+/* Hiển thị số lượng sản phẩm */
+.category-count {
+    font-size: 14px;
+    color: #666;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 800px;
+    opacity: 1; /* Đặt độ mờ ban đầu là 1 (hiển thị hoàn toàn) */
+    transition: opacity 0.5s ease-out; /* Thêm hiệu ứng chuyển tiếp cho opacity */
+}
+
+.messages.hidden {
+    opacity: 0; /* Khi class "hidden" được thêm, opacity sẽ giảm xuống 0 (ẩn) */
+}
+
+.messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+}
+
+.messages li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+/* Căn chỉnh bảng */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #343a40;
+}
+
+/* Căn chỉnh hình ảnh */
+.category-image {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Checkbox */
+
+
+/* Nút xóa */
+.btn-delete {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    background-color: #34181b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-delete:hover {
+    background-color: #c92435;
+}
+
+/* Phân trang */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-controls select {
+    margin-left: 5px;
+    margin-right: 5px;
+}

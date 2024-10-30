@@ -1,0 +1,10 @@
+{% extends 'layout/base.html' %}
+{% block main_content %}
+<h1>Xác nhận xóa sản phẩm</h1>
+<p>Bạn có chắc chắn muốn xóa sản phẩm "{{ object.ten }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Xóa</button>
+    <a href="{% url 'product-list' %}">Hủy</a>
+</form>
+{% endblock main_content %}

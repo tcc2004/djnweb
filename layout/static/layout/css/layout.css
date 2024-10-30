@@ -1,0 +1,258 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+min-height: 100vh;
+background: #b8bdcb;
+}
+.sidebar:hover{
+    width: 260px;
+}
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 100%;
+    display: flex;
+    background: #161a2d;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding: 25px 20px;
+    transition: all 0.4s ease;
+}
+.sidebar .side_header img{
+border-radius: 50%;
+width: 42px;
+}
+.sidebar .side_header {
+    align-items: center;
+    display: flex;
+}
+.sidebar .side_header h2{
+    color: rgb(195, 213, 230);
+    font-weight: 600;
+    font-style: 1.25rem;
+    margin-left: 23px;
+    white-space: nowrap;
+}
+.sidebar_links h4{
+    color: aliceblue;
+    white-space: nowrap;
+    font-weight: 500;
+    position: relative;
+    margin: 10px 0;
+}
+.sidebar_links h4 span{
+    opacity: 0;
+}
+.sidebar:hover .sidebar_links h4 span{
+    opacity: 1;
+}
+.sidebar_links .menu-separator{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 0;
+    height: 1px;
+    transform: translateY(-50%);
+    transform: scaleX(1);
+    transition: 0.2s;
+    transform-origin: right;
+}
+.sidebar:hover .sidebar_links .menu-separator{
+    transform: scaleX(0);
+    transition-delay: none;
+}
+.sidebar_links{
+    list-style: none;
+    height: 80%;
+    margin-top: 20px;
+    scrollbar-width: none;
+    overflow-y: auto;
+}
+.sidebar_links::-webkit-scrollbar{
+    display: none;
+}
+.sidebar_links li a{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 0 20px;
+    white-space: nowrap;
+    padding: 15px 10px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+.sidebar_links li a:hover{
+    color: #161a2d;
+    border-radius: 4px;
+    background: #fff;
+    padding: 100;
+}
+.text
+{
+    display: none;
+}
+.sidebar:hover .sidebar_links ul li a .text{
+    display: block;
+}
+.mainconten {
+    
+    margin-left: 70px; /* Kích thước mặc định của sidebar */
+    
+    width: calc(100% - 70px); /* Phần còn lại sau khi trừ sidebar */
+}
+
+.sidebar:hover ~ .mainconten {
+    margin-left: 260px; /* Khi sidebar mở rộng */
+    width: calc(100% - 260px); /* Điều chỉnh độ rộng của maincontent */
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    color: #888;
+}
+.search-bar input {
+    border: none;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    margin-left: 10px;
+    outline: none;
+    width: 200px;
+}
+.search-bar input::placeholder {
+    color: #888;
+}
+.search-bar i {
+    font-size: 18px;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+}
+.user-info i {
+    margin: 0 15px;
+    font-size: 18px;
+    color: #888;
+}
+.user-avatar {
+    display: flex;
+    align-items: center;
+    background-color: #d3e3fc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    font-size: 16px;
+    color: #000;
+    margin-right: 10px;
+}
+.user-name {
+    font-weight: 500;
+}
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 20px;
+    
+    
+}
+
+.content-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+/* Các nút hành động */
+.content-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.content-actions button {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.content-actions button i {
+    margin-right: 5px;
+}
+
+.content-actions button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Nút thêm sản phẩm */
+.add-product-btn {
+    background-color: #4285f4;
+    color: #fff;
+    border-color: #4285f4;
+}
+
+.add-product-btn:hover {
+    background-color: #357ae8;
+}
+.container {
+    padding: 10px;
+    margin: 0 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+.menu-item:hover .submenu {
+    display: block; /* Hiển thị submenu khi di chuột qua menu item */
+}
+
+/* Định dạng submenu */
+.submenu {
+    display: none; /* Ẩn submenu mặc định */
+    position: absolute;
+    background-color: #24242b;
+    border: 1px solid #531616;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    list-style-type: none;
+    border-radius: 3%;
+}
+
+.submenu li a {
+    display: flex;
+    align-items: center;
+    color: #a72222;
+    gap: 0 20px;
+    white-space: nowrap;
+    padding: 15px 10px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+a {
+    text-decoration: none;
+}

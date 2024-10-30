@@ -1,0 +1,24 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block main_content %}
+<h1>Nhập sản phẩm từ Excel</h1>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Nhập dữ liệu</button>
+</form>
+
+<a href="{% static 'files/product_template.xlsx' %}">
+    <button><i class="fas fa-download"></i> Tải file mẫu Excel</button>
+</a>
+
+<a href="{% url 'product-list' %}">Quay lại danh sách sản phẩm</a>
+{% endblock main_content %}
