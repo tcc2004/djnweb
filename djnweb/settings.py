@@ -46,7 +46,30 @@ INSTALLED_APPS = [
     'supplier',
     'returns',
     'manufacturer',
+
+    'django.contrib.sites',  
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', 
+
+    'crispy_forms',
+    'crispy_bootstrap5', 
+
+    'django_extensions'
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # cho đăng nhập bằng username/password
+    'allauth.account.auth_backends.AuthenticationBackend',  # cho allauth
+)
+CRISPY_TEMPLATE_PACK = 'bootstrap5'  
+
+SITE_ID = 1  # xác định site cho allauth
+
+LOGIN_REDIRECT_URL = '/home/'  # địa chỉ chuyển hướng sau khi đăng nhập thành công
+ACCOUNT_LOGOUT_REDIRECT_URL = '/home/'  # địa chỉ chuyển hướng sau khi đăng xuất
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'djnweb.urls'
@@ -75,6 +99,31 @@ TEMPLATES = [
         },
     },
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '971796073924-j8b7uq57lkgij4m44926dnr8qgc051oq.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
+SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
+    'client_id': '971796073924-j8b7uq57lkgij4m44926dnr8qgc051oq.apps.googleusercontent.com',
+    'secret': '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',
+    'key': ''
+}
 
 WSGI_APPLICATION = 'djnweb.wsgi.application'
 
