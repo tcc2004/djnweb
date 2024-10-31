@@ -103,8 +103,8 @@ TEMPLATES = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '971796073924-j8b7uq57lkgij4m44926dnr8qgc051oq.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': '',
+            'secret': '',
             'key': ''
         },
         'SCOPE': [
@@ -120,8 +120,8 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
 SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
-    'client_id': '971796073924-j8b7uq57lkgij4m44926dnr8qgc051oq.apps.googleusercontent.com',
-    'secret': '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',
+    'client_id': '',
+    'secret': '',
     'key': ''
 }
 
